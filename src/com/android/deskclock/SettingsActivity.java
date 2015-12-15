@@ -56,8 +56,7 @@ public class SettingsActivity extends BaseActivity {
     public static final String KEY_HOME_TZ = "home_time_zone";
     public static final String KEY_AUTO_HOME_CLOCK = "automatic_home_clock";
     public static final String KEY_VOLUME_BUTTONS = "volume_button_setting";
-    public static final String KEY_SHOW_ALARM_ICON = "show_status_bar_icon";
-    public static final String KEY_ALARM_SETTINGS = "key_alarm_settings";
+    public static final String KEY_WEEK_START = "week_start";
 
     public static final String DEFAULT_VOLUME_BEHAVIOR = "0";
     public static final String VOLUME_BEHAVIOR_SNOOZE = "1";
@@ -115,11 +114,6 @@ public class SettingsActivity extends BaseActivity {
             homeTimezonePref.setEntries(mTimezones[1]);
             homeTimezonePref.setSummary(homeTimezonePref.getEntry());
             homeTimezonePref.setOnPreferenceChangeListener(this);
-
-            final SwitchPreference showAlarmIconPref =
-                    (SwitchPreference) findPreference(KEY_SHOW_ALARM_ICON);
-            showAlarmIconPref.setChecked(CMSettings.System.getInt(
-                    getActivity().getContentResolver(), CMSettings.System.SHOW_ALARM_ICON, 1) == 1);
         }
 
         @Override
@@ -153,15 +147,10 @@ public class SettingsActivity extends BaseActivity {
             } else if (KEY_VOLUME_BUTTONS.equals(pref.getKey())) {
                 final ListPreference listPref = (ListPreference) pref;
                 updateActionSummary(listPref, (String) newValue, R.string.volume_buttons_summary);
-            } else if (KEY_FLIP_ACTION.equals(pref.getKey())) {
-                final ListPreference listPref = (ListPreference) pref;
-                updateActionSummary(listPref, (String) newValue, R.string.flip_action_summary);
-            } else if (KEY_SHAKE_ACTION.equals(pref.getKey())) {
-                final ListPreference listPref = (ListPreference) pref;
-                updateActionSummary(listPref, (String) newValue, R.string.shake_action_summary);
-            } else if (KEY_SHOW_ALARM_ICON.equals(pref.getKey())) {
-                CMSettings.System.putInt(getActivity().getContentResolver(),
-                        CMSettings.System.SHOW_ALARM_ICON, (Boolean) newValue ? 1 : 0);
+            } else if (KEY_WEEK_START.equals(pref.getKey())) {
+                final ListPreference weekStartPref = (ListPreference) findPreference(KEY_WEEK_START);
+                final int idx = weekStartPref.findIndexOfValue((String) newValue);
+                weekStartPref.setSummary(weekStartPref.getEntries()[idx]);
             }
             // Set result so DeskClock knows to refresh itself
             getActivity().setResult(RESULT_OK);
@@ -245,45 +234,12 @@ public class SettingsActivity extends BaseActivity {
             SensorManager sensorManager = (SensorManager)
                     getActivity().getSystemService(Context.SENSOR_SERVICE);
 
-            final ListPreference flipActionPref = (ListPreference) findPreference(KEY_FLIP_ACTION);
-            if (flipActionPref != null) {
-                if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
-                    flipActionPref.setValue("0"); // Turn it off
-                    PreferenceCategory category = (PreferenceCategory) findPreference(KEY_ALARM_SETTINGS);
-                    if (category != null) {
-                        category.removePreference(flipActionPref);
-                    }
-                } else {
-                    updateActionSummary(flipActionPref, flipActionPref.getValue(), R.string.flip_action_summary);
-                    flipActionPref.setOnPreferenceChangeListener(this);
-                }
-            }
-
-            final ListPreference shakeActionPref = (ListPreference) findPreference(KEY_SHAKE_ACTION);
-            if (shakeActionPref != null) {
-                List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
-                if (sensorList.size() < 1) { // This will be true if no accelerometer sensor
-                    shakeActionPref.setValue("0"); // Turn it off
-                    PreferenceCategory category = (PreferenceCategory) findPreference(KEY_ALARM_SETTINGS);
-                    if (category != null) {
-                        category.removePreference(shakeActionPref);
-                    }
-                } else {
-                    updateActionSummary(shakeActionPref, shakeActionPref.getValue(), R.string.shake_action_summary);
-                    shakeActionPref.setOnPreferenceChangeListener(this);
-                }
-            }
-
             final Preference volumePref = findPreference(KEY_ALARM_VOLUME);
             volumePref.setOnPreferenceClickListener(this);
 
             final SnoozeLengthDialog snoozePref =
                     (SnoozeLengthDialog) findPreference(KEY_ALARM_SNOOZE);
             snoozePref.setSummary();
-
-            final SwitchPreference showAlarmIconPref =
-                    (SwitchPreference) findPreference(KEY_SHOW_ALARM_ICON);
-            showAlarmIconPref.setOnPreferenceChangeListener(this);
         }
 
         private void updateAutoSnoozeSummary(ListPreference listPref, String delay) {

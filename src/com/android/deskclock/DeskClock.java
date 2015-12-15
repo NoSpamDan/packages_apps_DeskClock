@@ -339,17 +339,6 @@ public class DeskClock extends BaseActivity
                 startActivityForResult(new Intent(DeskClock.this, SettingsActivity.class),
                         REQUEST_CHANGE_SETTINGS);
                 return true;
-            case R.id.menu_item_widget_settings:
-                Intent wsi = new Intent();
-                wsi.setComponent(sWidgetSettingComponentName);
-                try {
-                    startActivity(wsi);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(this, getResources().getString(R.string.activity_not_found),
-                            Toast.LENGTH_SHORT).show();
-                    Log.w(LOG_TAG, "Cannot find the activity!");
-                }
-                return true;
             case R.id.menu_item_help:
                 Intent i = item.getIntent();
                 if (i != null) {
