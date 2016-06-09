@@ -33,9 +33,6 @@ import com.android.deskclock.R;
 import com.android.deskclock.alarms.AlarmStateManager;
 import com.android.deskclock.events.Events;
 
-import cyanogenmod.app.ProfileManager;
-import cyanogenmod.alarmclock.ClockContract;
-
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;

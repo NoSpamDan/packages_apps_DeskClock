@@ -36,8 +36,8 @@
     <!-- It is also required to display user-friendly names for custom ringtones in the UI. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SHUTDOWN" />
-    <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="cyanogenmod.permission.MODIFY_PROFILES" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MODIFY_PROFILES" />
 
     <application android:label="@string/app_label"
                  android:name=".DeskClockApplication"
@@ -51,8 +51,8 @@
 
         <provider android:name=".provider.ClockProvider"
                 android:authorities="com.android.deskclock"
-                android:readPermission="cyanogenmod.permission.READ_ALARMS"
-                android:writePermission="cyanogenmod.permission.WRITE_ALARMS"
+                android:readPermission="android.permission.READ_ALARMS"
+                android:writePermission="android.permission.WRITE_ALARMS"
                 android:exported="true" />
 
         <activity android:name="DeskClock"
@@ -369,10 +369,10 @@
 
         <service android:name="com.android.deskclock.AlarmModificationIntentService"
                 android:exported="true"
-                android:permission="cyanogenmod.permission.MANAGE_ALARMS"
+                android:permission="android.permission.MANAGE_ALARMS"
                 android:description="@string/alarm_modification_service_desc">
             <intent-filter>
-                <action android:name="cyanogenmod.alarmclock.SET_ALARM_ENABLED" />
+                <action android:name="android.alarmclock.SET_ALARM_ENABLED" />
             </intent-filter>
         </service>
     </application>

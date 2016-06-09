@@ -71,7 +71,7 @@ public class DeskClock extends BaseActivity
     // Alarm action for midnight (so we can update the date display).
     private static final String KEY_SELECTED_TAB = "selected_tab";
     public static final String SELECT_TAB_INTENT_EXTRA = "deskclock.select.tab";
-    private static final String LC_PACKAGE = "com.cyanogenmod.lockclock";
+    private static final String LC_PACKAGE = "com.android.lockclock";
     private static final String LC_ACTIVITY = LC_PACKAGE + ".preference.Preferences";
     private static final ComponentName sWidgetSettingComponentName = new ComponentName
             (LC_PACKAGE, LC_ACTIVITY);

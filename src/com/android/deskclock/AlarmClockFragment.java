@@ -86,9 +86,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.UUID;
 
-import cyanogenmod.app.Profile;
-import cyanogenmod.app.ProfileManager;
-
 /**
  * AlarmClock application.
  */

@@ -40,9 +40,6 @@ import com.android.deskclock.R;
 import com.android.deskclock.events.Events;
 import com.android.deskclock.provider.AlarmInstance;
 
-import cyanogenmod.app.Profile;
-import cyanogenmod.app.ProfileManager;
-
 /**
  * This service is in charge of starting/stopping the alarm. It will bring up and manage the
  * {@link AlarmActivity} as well as {@link AlarmKlaxon}.

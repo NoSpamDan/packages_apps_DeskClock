@@ -36,8 +36,6 @@ import android.view.MenuItem;
 
 import com.android.deskclock.worldclock.Cities;
 
-import cyanogenmod.providers.CMSettings;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
